@@ -1,0 +1,26 @@
+<div class="header">
+    <h2>Tätigkeiten</h2>
+    <h2>Priorität</h2>
+    <h2>Erledigt</h2>
+    <button class="new-todo" (click)="addNewToDo()">New</button>
+</div>
+<div class="main">
+    <ul class="todo-list">
+        <li *ngFor="let toDo of toDos">
+            <div *ngIf="!toDo.isEditing">
+                <h3 class="todo-name">{{toDo.name | titlecase}}</h3>
+                <div class="todo-priority">{{toDo.priority}}</div>
+                <div class="todo-dropdown-container">
+                    <div class="todo-dropdown-item"></div>
+                    <div class="todo-dropdown-item"></div>
+                    <div class="todo-dropdown-item"></div>
+                </div>
+                <button (click)="onSelect(toDo)">Edit</button>
+            </div>
+            <div *ngIf="toDo.isEditing">
+                <input [(ngModel)]="toDo.name">
+                <button (click)="toggleEdit(toDo)">Save</button>
+            </div>
+        </li>
+    </ul>
+</div>
