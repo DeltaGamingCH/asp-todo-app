@@ -7,6 +7,7 @@
 <div class="main">
     <ul class="todo-list">
         <li *ngFor="let toDo of toDos">
+            <!-- Regular view -->
             <div *ngIf="!toDo.isEditing">
                 <h3 class="todo-name">{{toDo.name | titlecase}}</h3>
                 <div class="todo-priority">{{toDo.priority}}</div>
@@ -15,8 +16,9 @@
                     <div class="todo-dropdown-item"></div>
                     <div class="todo-dropdown-item"></div>
                 </div>
-                <button (click)="onSelect(toDo)">Edit</button>
+                <button (click)="toggleEdit(toDo)">Edit</button>
             </div>
+            <!-- Editing View -->
             <div *ngIf="toDo.isEditing">
                 <input [(ngModel)]="toDo.name">
                 <button (click)="toggleEdit(toDo)">Save</button>
