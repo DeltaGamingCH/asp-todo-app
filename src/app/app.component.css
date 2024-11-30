@@ -1,4 +1,6 @@
 .app-title{
-    display: flex;
-    justify-content: center;
+    text-align: center;
+    font-size: 2rem;
+    color: #FBCC04;
+    margin: 20px 0;
 }
