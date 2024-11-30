@@ -3,5 +3,6 @@ export interface ToDo {
     name: string,
     priority: string,
     complete: boolean,
-    isEditing: boolean
+    isEditing: boolean,
+    isDropdownOpen: boolean
 }

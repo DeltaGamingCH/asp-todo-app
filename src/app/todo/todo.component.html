@@ -1,28 +1,49 @@
 <div class="header">
-    <h2>Tätigkeiten</h2>
-    <h2>Priorität</h2>
-    <h2>Erledigt</h2>
+    <div>
+        <h2>Tätigkeiten</h2>
+    </div>
+    <div>
+        <h2>Priorität</h2>
+    </div>
+    <div>
+        <h2>Erledigt</h2>
+    </div>
     <button class="new-todo" (click)="addNewToDo()">New</button>
 </div>
-<div class="main">
-    <ul class="todo-list">
-        <li *ngFor="let toDo of toDos">
-            <!-- Regular view -->
-            <div *ngIf="!toDo.isEditing">
-                <h3 class="todo-name">{{toDo.name | titlecase}}</h3>
-                <div class="todo-priority">{{toDo.priority}}</div>
-                <div class="todo-dropdown-container">
-                    <div class="todo-dropdown-item"></div>
-                    <div class="todo-dropdown-item"></div>
-                    <div class="todo-dropdown-item"></div>
+
+<ul class="todo-list">
+    <li *ngFor="let toDo of toDos">
+        <div class="todo-name">
+            <ng-container *ngIf="!toDo.isEditing; else editMode">
+                {{ toDo.name }}
+            </ng-container>
+            <ng-template #editMode>
+                <input
+                    type="text"
+                    [(ngModel)]="toDo.name"
+                    (blur)="toggleEdit(toDo)"
+                    (keydown.enter)="toggleEdit(toDo)"
+                />
+            </ng-template>
+        </div>
+
+        <div class="priority-container">
+            <button class="priority-button" (click)="togglePriorityDropdown(toDo)">
+                {{ toDo.priority | titlecase }}
+                <span class="dropdown-icon" [class.open]="toDo.isDropdownOpen">＜</span>
+            </button>
+            
+            <div *ngIf="toDo.isDropdownOpen" class="priority-dropdown">
+                <div *ngFor="let priority of priorities" class="priority-option" (click)="changePriority(toDo, priority)">
+                    {{ priority | titlecase }}
                 </div>
-                <button (click)="toggleEdit(toDo)">Edit</button>
             </div>
-            <!-- Editing View -->
-            <div *ngIf="toDo.isEditing">
-                <input [(ngModel)]="toDo.name">
-                <button (click)="toggleEdit(toDo)">Save</button>
-            </div>
-        </li>
-    </ul>
-</div>
+        </div>
+
+        <div class="todo-completed">
+            <input type="checkbox" [(ngModel)]="toDo.complete" />
+        </div>
+
+        <button class="edit-button" (click)="toggleEdit(toDo)">Edit</button>
+    </li>
+</ul>
